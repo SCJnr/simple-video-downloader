@@ -1,0 +1,122 @@
+/* popup.css */
+body {
+    font-family: Arial, sans-serif;
+    width: 320px;
+    margin: 0;
+    padding: 0;
+    color: #333;
+  }
+  
+  header {
+    background-color: #4285f4;
+    padding: 10px 15px;
+    color: white;
+  }
+  
+  header h1 {
+    margin: 0;
+    font-size: 18px;
+  }
+  
+  #content {
+    padding: 15px;
+  }
+  
+  #loading {
+    text-align: center;
+    padding: 20px 0;
+    color: #666;
+  }
+  
+  .group-header {
+    font-size: 14px;
+    margin: 15px 0 10px 0;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #eee;
+    color: #4285f4;
+  }
+  
+  .video-item {
+    border: 1px solid #eee;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f9f9f9;
+  }
+  
+  .video-info {
+    flex-grow: 1;
+    margin-right: 10px;
+    overflow: hidden;
+  }
+  
+  .video-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .video-quality {
+    color: #666;
+    font-size: 12px;
+  }
+  
+  .download-button {
+    background-color: #4285f4;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  
+  .download-button:hover {
+    background-color: #3367d6;
+  }
+  
+  .download-icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+  }
+  
+  footer {
+    padding: 10px 15px;
+    background-color: #f5f5f5;
+    font-size: 11px;
+    color: #666;
+    text-align: center;
+    border-top: 1px solid #ddd;
+  }
+  
+  button {
+    background-color: #4285f4;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #3367d6;
+  }
+  
+  #no-videos {
+    text-align: center;
+    padding: 20px 0;
+  }
+  
+  #videos-list {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-top: 10px;
+  }

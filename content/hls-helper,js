@@ -1,0 +1,87 @@
+/**
+ * HLS Helper - Functions to help with HLS (m3u8) video stream detection and processing
+ */
+
+(function() {
+    // Check if a URL is an HLS stream
+    function isHlsStream(url) {
+        return url && typeof url === 'string' && 
+            (url.includes('.m3u8') || url.includes('playlist.m3u8'));
+    }
+
+    // Parse HLS manifest to get quality streams
+    async function parseHlsManifest(manifestUrl) {
+        try {
+            const response = await fetch(manifestUrl, { 
+                method: 'GET',
+                mode: 'cors',
+                credentials: 'same-origin'
+            });
+            const text = await response.text();
+            
+            // Parse the manifest
+            const streams = [];
+            const lines = text.split('\n');
+            let currentBandwidth = null;
+            let currentResolution = null;
+            
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i].trim();
+                
+                // Check for resolution and bandwidth
+                if (line.startsWith('#EXT-X-STREAM-INF:')) {
+                    let bandwidth = line.match(/BANDWIDTH=(\d+)/);
+                    let resolution = line.match(/RESOLUTION=(\d+x\d+)/);
+                    
+                    if (bandwidth) currentBandwidth = parseInt(bandwidth[1]);
+                    if (resolution) currentResolution = resolution[1];
+                } 
+                // Check for URLs
+                else if (line && !line.startsWith('#') && (line.includes('.m3u8') || line.startsWith('http'))) {
+                    let url = line;
+                    // Handle relative URLs
+                    if (!url.startsWith('http')) {
+                        const manifestBase = manifestUrl.substring(0, manifestUrl.lastIndexOf('/') + 1);
+                        url = manifestBase + url;
+                    }
+                    
+                    streams.push({
+                        url: url,
+                        bandwidth: currentBandwidth,
+                        resolution: currentResolution,
+                        quality: currentResolution ? currentResolution : 
+                                 currentBandwidth ? (currentBandwidth / 1000) + 'Kbps' : 'Unknown'
+                    });
+                    
+                    currentBandwidth = null;
+                    currentResolution = null;
+                }
+            }
+            
+            return streams;
+        } catch (error) {
+            console.error('Error parsing HLS manifest:', error);
+            return [];
+        }
+    }
+
+    // Extract the best quality stream from an HLS manifest
+    async function getBestQualityHlsStream(manifestUrl) {
+        const streams = await parseHlsManifest(manifestUrl);
+        if (streams.length === 0) return manifestUrl;
+        
+        // Sort by bandwidth (highest first)
+        streams.sort((a, b) => {
+            return (b.bandwidth || 0) - (a.bandwidth || 0);
+        });
+        
+        return streams[0].url;
+    }
+
+    // Expose functions to global scope
+    window.hlsHelper = {
+        isHlsStream: isHlsStream,
+        parseHlsManifest: parseHlsManifest,
+        getBestQualityHlsStream: getBestQualityHlsStream
+    };
+})();

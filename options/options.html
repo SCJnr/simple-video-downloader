@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Video Downloader Options</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Video Downloader Options</h1>
+    
+    <div class="option-group">
+      <h2>Download Settings</h2>
+      
+      <div class="option">
+        <label for="default-filename">Default filename format:</label>
+        <input type="text" id="default-filename" placeholder="{title}_{index}">
+        <p class="help-text">
+          Available variables: {title}, {index}, {quality}, {date}
+        </p>
+      </div>
+      
+      <div class="option">
+        <label for="always-save-as">
+          <input type="checkbox" id="always-save-as">
+          Always show "Save As" dialog
+        </label>
+      </div>
+    </div>
+    
+    <div class="option-group">
+      <h2>Detection Settings</h2>
+      
+      <div class="option">
+        <label for="detect-hls">
+          <input type="checkbox" id="detect-hls" checked>
+          Detect HLS (m3u8) streams
+        </label>
+      </div>
+      
+      <div class="option">
+        <label for="detect-embeds">
+          <input type="checkbox" id="detect-embeds" checked>
+          Detect embedded videos (YouTube, Vimeo, etc.)
+        </label>
+      </div>
+      
+      <div class="option">
+        <label for="detect-links">
+          <input type="checkbox" id="detect-links" checked>
+          Detect video links
+        </label>
+      </div>
+    </div>
+    
+    <div class="option-group">
+      <h2>Advanced Settings</h2>
+      
+      <div class="option">
+        <label for="max-videos">Maximum videos to detect:</label>
+        <input type="number" id="max-videos" min="1" max="100" value="20">
+      </div>
+      
+      <div class="option">
+        <label for="auto-scan">
+          <input type="checkbox" id="auto-scan" checked>
+          Automatically scan for videos when popup opens
+        </label>
+      </div>
+    </div>
+    
+    <div class="actions">
+      <button id="save-button">Save Options</button>
+      <button id="reset-button">Reset to Defaults</button>
+    </div>
+    
+    <div id="status"></div>
+  </div>
+  
+  <script src="options.js"></script>
+</body>
+</html>
